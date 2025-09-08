@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "vsc_unia_app_prod",
-    "slug": "vsc_unia_app_prod",
+    "name": "VSC Unia App",
+    "slug": "vsc-unia-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,9 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vscunia.app"
     },
     "android": {
+      "package": "com.vscunia.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
