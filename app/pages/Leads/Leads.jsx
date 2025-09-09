@@ -13,7 +13,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  StatusBar
 } from 'react-native';
 import Modal from 'react-native-modal';
 import CustomAlertModal from '../../components/CustomAlertModal';
@@ -602,6 +603,7 @@ const styles = StyleSheet.create({
   viewWrapper: {
     flex: 1,
     backgroundColor: '#ffffff',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   safeArea: {
     flex: 1,
@@ -611,6 +613,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     paddingHorizontal: 20,
+    
     
   },
   header: {
