@@ -80,11 +80,11 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
             onPress={onPress}
             style={styles.tabButton}
           >
             {icon && icon({ 
+              focused: isFocused,
               color: isFocused ? "#fff" : "#BCBEC1", 
               size: 24 
             })}
@@ -94,7 +94,7 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
               marginTop: 4,
               fontFamily: 'Poppins-Regular'
             }}>
-              {label}
+              {typeof label === 'string' ? label : route.name}
             </Text>
           </TouchableOpacity>
         );

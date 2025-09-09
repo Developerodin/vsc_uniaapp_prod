@@ -58,7 +58,7 @@ export default function Earnings() {
     navigation.navigate('TransactionHistory');
   };
   const handlePoliciesSold = () => {
-    navigation.navigate('Leads');
+    navigation.navigate('leads');
   };
   
   const handleLeadsConverted = () => {

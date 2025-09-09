@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Fontisto, MaterialIcons } from '@expo/vector-icons';
+import { Image } from 'react-native';
+import CustomTabBar from '../components/CustomTabBar';
 
 // Import Onboard pages
 import Onboarding from '../pages/Onboard/Onboarding';
@@ -68,44 +70,48 @@ const Tab = createBottomTabNavigator();
 const Tabs = ({ navigation }) => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: '#EB784E',
-        tabBarInactiveTintColor: '#AAAAAA',
-        tabBarLabelStyle: { fontSize: 10 },
-        tabBarStyle: {
-          position: 'absolute',
-          backgroundColor: '#FFFFFF',
-          paddingTop: 10,
-          paddingBottom: 20,
-          height: 80,
-          borderTopColor: '#000',
-          borderTopWidth: 0,
-          width: '100%',
-          left: '0%',
-          right: '0%',
-        },
+        headerShown: false,
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="home"
         component={Home}
         options={{
+          title: "HOME",
           tabBarIcon: ({ color, size }) => (
-            <Fontisto name="home" size={size ?? 24} color={color} />
+            <Image
+              source={require('../../assets/icons/House.png')} 
+              style={{ width: 24, height: 24, tintColor: color }}
+            />
           ),
-          headerShown: false,
         }}
       />
       <Tab.Screen
-        name="StepTracker"
-        component={StepTracker}
+        name="leads"
+        component={Leads}
         options={{
+          title: "LEADS",
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="directions-walk" size={size ?? 24} color={color} />
+            <Image
+              source={require('../../assets/icons/growth.png')} 
+              style={{ width: 24, height: 24, tintColor: color }}
+            />
           ),
-          headerShown: false,
-          tabBarLabel: 'Steps',
+        }}
+      />
+      <Tab.Screen
+        name="earning"
+        component={Earnings}
+        options={{
+          title: "EARNING",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require('../../assets/icons/ruppe.png')} 
+              style={{ width: 24, height: 24, tintColor: color }}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
