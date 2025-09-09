@@ -103,24 +103,9 @@ export const takePhotoWithCamera = async (options = {}) => {
 
 export const showImagePickerOptions = async (onSelectFromLibrary, onTakePhoto) => {
   try {
-    const actionSheet = await import('@expo/react-native-action-sheet');
-    
-    const options = ['Take Photo', 'Choose from Library', 'Cancel'];
-    const cancelButtonIndex = 2;
-
-    actionSheet.ActionSheetIOS.showActionSheetWithOptions(
-      {
-        options,
-        cancelButtonIndex,
-      },
-      (buttonIndex) => {
-        if (buttonIndex === 0) {
-          onTakePhoto();
-        } else if (buttonIndex === 1) {
-          onSelectFromLibrary();
-        }
-      }
-    );
+    // For now, just use the library picker as fallback
+    // The dynamic import might be causing issues with the bundler
+    onSelectFromLibrary();
   } catch (error) {
     console.error('Action sheet error:', error);
     // Fallback to library picker

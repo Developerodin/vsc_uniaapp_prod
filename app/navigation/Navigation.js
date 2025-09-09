@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Fontisto, MaterialIcons } from '@expo/vector-icons';
-import { Image } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import CustomTabBar from '../components/CustomTabBar';
 
 // Import Onboard pages
@@ -32,7 +32,7 @@ import ContactSupport from '../pages/Profile/ContactSupport';
 import HelpCenter from '../pages/Profile/HelpCenter';
 import PrivacyPolicy from '../pages/Profile/PrivacyPolicy';
 import ProfileNotifications from '../pages/Profile/ProfileNotifications';
-import TermsCondition from '../pages/Profile/Terms&Condition';
+import TermsCondition from '../pages/Profile/TermsAndCondition';
 import VerifyOtp from '../pages/Profile/VerifyOtp';
 
 // Import Leads pages
