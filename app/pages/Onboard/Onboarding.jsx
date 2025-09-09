@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StatusBar } from 'expo-status-bar';
+
 import React, { useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,7 +13,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Platform,
+  StatusBar
 } from 'react-native';
 
 
@@ -126,7 +128,7 @@ export default function Onboarding() {
       style={styles.gradientContainer}
     >
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar style="auto" />
+        {/* <StatusBar style="auto" /> */}
 
         {/* Background image - positioned behind everything */}
         <RNImage
@@ -244,6 +246,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     position: 'relative',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   headerContainer: {
     flexDirection: 'row',
