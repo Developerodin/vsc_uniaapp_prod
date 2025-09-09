@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffffff',
         paddingHorizontal: 20,
-        paddingTop: Platform.OS === 'ios' ? 0 : 15,
+        
     },
     header: {
         flexDirection: 'row',
