@@ -33,6 +33,14 @@ import ProfileNotifications from '../pages/Profile/ProfileNotifications';
 import TermsCondition from '../pages/Profile/Terms&Condition';
 import VerifyOtp from '../pages/Profile/VerifyOtp';
 
+// Import Leads pages
+import Leads from '../pages/Leads/Leads';
+import AddLead from '../pages/Leads/AddLead';
+import CustomerProfile from '../pages/Leads/CustomerProfile';
+
+// Import Notifications pages
+import Notifications from '../pages/Notifications/Notifications';
+
 // Import Home pages
 import Home from '../pages/Home/Home';
 import StepTracker from '../pages/StepTracker';
@@ -302,6 +310,40 @@ const Navigation = ({ isFirstTime, isAuthenticated, setIsFirstTime, setIsAuthent
         <Stack.Screen 
           name="VerifyOtp" 
           component={VerifyOtp}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        {/* Leads Screens */}
+        <Stack.Screen 
+          name="Leads" 
+          component={Leads}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="AddLead" 
+          component={AddLead}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="CustomerProfile" 
+          component={CustomerProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        {/* Notifications Screens */}
+        <Stack.Screen 
+          name="Notifications" 
+          component={Notifications}
           options={{
             headerShown: false,
           }}

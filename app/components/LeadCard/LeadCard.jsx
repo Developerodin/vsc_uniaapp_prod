@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import profile from '../../assets/icons/Profile.png';
+import profile from '../../../assets/icons/Profile.png';
 export default function LeadCard({ lead, navigation }) {
   const handleCustomerProfile = () => {
     navigation.navigate('CustomerProfile', { leadId: lead.id });
