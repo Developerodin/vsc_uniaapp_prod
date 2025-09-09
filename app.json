@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "VSC Unia App",
+    "name": "VSC UNIA",
     "slug": "vsc-unia-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/app-assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,13 +19,18 @@
     "android": {
       "package": "com.vscunia.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/app-assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/app-assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e984a678-3119-42b8-a438-f4a51fe69d70"
+      }
     }
   }
 }
