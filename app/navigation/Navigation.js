@@ -8,6 +8,15 @@ import { Fontisto, MaterialIcons } from '@expo/vector-icons';
 import Home from '../pages/Home/Home';
 import StepTracker from '../pages/StepTracker';
 
+import BankingProducts from '../pages/Home/BankingProducts.jsx';
+import PersonalLoan from '../pages/Home/PersonalLoan.jsx';
+import PolicyDetails from '../pages/Home/PolicyDetails.jsx';
+import InsuranceProducts from '../pages/Home/InsuranceProducts.jsx';
+import LoanProducts from '../pages/Home/LoanProducts.jsx';
+import TermLifeInsurance from '../pages/Home/TermLifeInsurance.jsx';
+import LifeInsurance from '../pages/Home/LifeInsurance.jsx';
+
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -84,7 +93,62 @@ const Navigation = () => {
           }}
         />
         
-       
+        {/* Home folder pages */}
+        <Stack.Screen 
+          name="BankingProducts" 
+          component={BankingProducts}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="PersonalLoan" 
+          component={PersonalLoan}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="PolicyDetails" 
+          component={PolicyDetails}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="InsuranceProducts" 
+          component={InsuranceProducts}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="LoanProducts" 
+          component={LoanProducts}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="TermLifeInsurance" 
+          component={TermLifeInsurance}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="LifeInsurance" 
+          component={LifeInsurance}
+          options={{
+            headerShown: false,
+          }}
+        />
       
       </Stack.Navigator>
     </NavigationContainer>

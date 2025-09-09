@@ -17,12 +17,10 @@ import {
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
 
-import { navigateTo, goBack, replace } from "../../utils/navigation";
-import { useLocalSearchParams } from "expo-router";
 const { width } = Dimensions.get('window');
 
-export default function PolicyDetails() {
-    const params = useLocalSearchParams();
+export default function PolicyDetails({ navigation, route }) {
+    const params = route?.params || {};
     const { subcategory, category } = params || {};
     
     const [loading, setLoading] = useState(true);
@@ -72,7 +70,7 @@ export default function PolicyDetails() {
     };
     
     const handleBackPress = () => {
-        goBack();
+        navigation.goBack();
     };
 
     const handleSharePDF = () => {
@@ -104,7 +102,7 @@ export default function PolicyDetails() {
                             <View style={{paddingHorizontal:10,marginBottom:80}}>
                             <View style={styles.imageContainer}>
                                 <Image
-                                    source={require('../../assets/images/Watch.png')} // Static image
+                                    source={require('../../../assets/images/Watch.png')} // Static image
                                     style={styles.watchImage}
                                     resizeMode="cover"
                                 />

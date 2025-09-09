@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { navigateTo, goBack, replace } from "../../utils/navigation";
 import {
     Image,
     SafeAreaView,
@@ -12,19 +11,19 @@ import {
 } from 'react-native';
 
 
-export default function BankingProducts() {
+export default function BankingProducts({ navigation }) {
     const handleLifeInsurance = () => {
-        navigateTo('PersonalLoan');
+        navigation.navigate('PersonalLoan');
     };
     const handleBackPress = () => {
-        goBack();
+        navigation.goBack();
     };
 
     const insuranceTypes = [
         {
             id: 1,
             title: "Personal Loan",
-            iconSource: require('../../assets/icons/Personal_Loan.png'), // Update path as needed
+            iconSource: require('../../../assets/icons/Personal_Loan.png'), // Update path as needed
             onPress: handleLifeInsurance,
             iconWidth: 30,
             iconHeight: 30,
@@ -32,7 +31,7 @@ export default function BankingProducts() {
         {
             id: 2,
             title: "Business Loan",
-            iconSource: require('../../assets/icons/Business_Loan.png'), // Update path as needed
+            iconSource: require('../../../assets/icons/Business_Loan.png'), // Update path as needed
             onPress: handleLifeInsurance,
             iconWidth: 31,
             iconHeight: 31,
@@ -40,7 +39,7 @@ export default function BankingProducts() {
         {
             id: 3,
             title: "Car Loan",
-            iconSource: require('../../assets/icons/Car_Loan.png'), // Update path as needed
+            iconSource: require('../../../assets/icons/Car_Loan.png'), // Update path as needed
             onPress: handleLifeInsurance,
             iconWidth: 39,
             iconHeight: 39,
@@ -48,7 +47,7 @@ export default function BankingProducts() {
         {
             id: 4,
             title: "MSME Loan",
-            iconSource: require('../../assets/icons/Home_Loan.png'), // Update path as needed
+            iconSource: require('../../../assets/icons/Home_Loan.png'), // Update path as needed
             onPress: handleLifeInsurance,
             iconWidth: 40,
             iconHeight: 40,

@@ -11,10 +11,9 @@ import {
 import FeaturedProductCard from '../../components/FeaturedProductCard/FeaturedProductCard';
 
 
-import { navigateTo, goBack, replace } from "../../utils/navigation";
-export default function TermLifeInsurance() {
+export default function TermLifeInsurance({ navigation }) {
     const handleBackPress = () => {
-        goBack();
+        navigation.goBack();
     };
 
 
@@ -34,13 +33,13 @@ export default function TermLifeInsurance() {
           {/* Row 1 */}
           <View style={styles.cardRow}>
             <FeaturedProductCard
-              image={require('../../assets/images/Featured_1.png')}
+              image={require('../../../assets/images/Featured_1.png')}
               pillText="Health Insurance"
               title="Star Health – Young Star Policy"
               commission="15%"
             />
             <FeaturedProductCard
-              image={require('../../assets/images/Featured_1.png')}
+              image={require('../../../assets/images/Featured_1.png')}
               pillText="Health Insurance"
               title="Star Health – Young Star Policy"
               commission="15%"
@@ -50,13 +49,13 @@ export default function TermLifeInsurance() {
           {/* Row 2 */}
           <View style={styles.cardRow}>
             <FeaturedProductCard
-              image={require('../../assets/images/Featured_1.png')}
+              image={require('../../../assets/images/Featured_1.png')}
               pillText="Health Insurance"
               title="Star Health – Young Star Policy"
               commission="15%"
             />
             <FeaturedProductCard
-              image={require('../../assets/images/Featured_1.png')}
+              image={require('../../../assets/images/Featured_1.png')}
               pillText="Health Insurance"
               title="Star Health – Young Star Policy"
               commission="15%"
@@ -66,13 +65,13 @@ export default function TermLifeInsurance() {
           {/* Row 3 */}
           <View style={styles.cardRow}>
             <FeaturedProductCard
-              image={require('../../assets/images/Featured_1.png')}
+              image={require('../../../assets/images/Featured_1.png')}
               pillText="Health Insurance"
               title="Star Health – Young Star Policy"
               commission="15%"
             />
             <FeaturedProductCard
-              image={require('../../assets/images/Featured_1.png')}
+              image={require('../../../assets/images/Featured_1.png')}
               pillText="Health Insurance"
               title="Star Health – Young Star Policy"
               commission="15%"

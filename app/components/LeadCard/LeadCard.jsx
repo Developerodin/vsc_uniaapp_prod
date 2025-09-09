@@ -1,11 +1,9 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import profile from '../../assets/icons/Profile.png';
-import { navigateTo } from '../../utils/navigation';
-
-export default function LeadCard({ lead }) {
+export default function LeadCard({ lead, navigation }) {
   const handleCustomerProfile = () => {
-    navigateTo('CustomerProfile', { leadId: lead.id });
+    navigation.navigate('CustomerProfile', { leadId: lead.id });
   };
   // Status color mapping
   const getStatusColor = (status) => {

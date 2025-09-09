@@ -14,10 +14,8 @@ import {
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
 
-import { useLocalSearchParams } from "expo-router";
-import { goBack, navigateTo } from "../../utils/navigation";
-export default function LifeInsurance() {
-    const params = useLocalSearchParams();
+export default function LifeInsurance({ navigation, route }) {
+    const params = route?.params || {};
     const { category, categoryId, productId, categoryType } = params || {};
     
     const [loading, setLoading] = useState(true);
@@ -68,13 +66,13 @@ export default function LifeInsurance() {
     };
     
     const handleBackPress = () => {
-        goBack();
+        navigation.goBack();
     };
     
     const handleSubcategoryPress = (subcategory) => {
         // Navigate to AddLead with pre-selected product, category, and subcategory
         // Serialize objects as JSON strings to avoid "[object Object]" issue
-        navigateTo('AddLead', { 
+        navigation.navigate('AddLead', { 
             preSelectedProduct: JSON.stringify({
                 value: productId,
                 label: categoryType || 'Product',

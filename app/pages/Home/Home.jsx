@@ -268,7 +268,7 @@ const Home = ({navigation}) => {
       if (section.cardType === 1) {
         // CardType 1: Navigate to InsuranceProducts
         if (section.productId) {
-          navigateTo("InsuranceProducts", { 
+          navigation.navigate("InsuranceProducts", { 
             productId: section.productId, 
             categoryType 
           });
@@ -276,18 +276,18 @@ const Home = ({navigation}) => {
           // Fallback: Find the product ID from categoryProducts
           const sectionProducts = categoryProducts[categoryType] || [];
           if (sectionProducts.length > 0) {
-            navigateTo("InsuranceProducts", { 
+            navigation.navigate("InsuranceProducts", { 
               productId: sectionProducts[0].id, 
               categoryType 
             });
           } else {
-            navigateTo("CategoryProducts", { categoryType });
+            navigation.navigate("BankingProducts", { categoryType });
           }
         }
       } else {
         // CardType 2: Navigate to LoanProducts
         if (section.productId) {
-          navigateTo("LoanProducts", { 
+          navigation.navigate("LoanProducts", { 
             productId: section.productId, 
             categoryType 
           });
@@ -295,23 +295,23 @@ const Home = ({navigation}) => {
           // Fallback: Find the product ID from categoryProducts
           const sectionProducts = categoryProducts[categoryType] || [];
           if (sectionProducts.length > 0) {
-            navigateTo("LoanProducts", { 
+            navigation.navigate("LoanProducts", { 
               productId: sectionProducts[0].id, 
               categoryType 
             });
           } else {
-            navigateTo("CategoryProducts", { categoryType });
+            navigation.navigate("BankingProducts", { categoryType });
           }
         }
       }
     } else {
       // If no section found, navigate to default
-      navigateTo("CategoryProducts", { categoryType });
+      navigation.navigate("BankingProducts", { categoryType });
     }
   };
 
   const handleProfile = () => {
-    navigateTo("Profile");
+    navigation.navigate("Profile");
   };
 
   const handleSearch = () => {
@@ -365,14 +365,14 @@ const Home = ({navigation}) => {
         });
 
         // Navigate to search results with filtered section products
-        navigateTo("SearchResults", {
+        navigation.navigate("BankingProducts", {
           results: filteredSectionProducts,
           searchQuery: searchQuery.trim(),
           section: matchingSection.name,
         });
       } else {
         // Navigate to search results screen with the filtered results
-        navigateTo("SearchResults", {
+        navigation.navigate("BankingProducts", {
           results: searchResults,
           searchQuery: searchQuery.trim(),
         });
@@ -494,7 +494,7 @@ const Home = ({navigation}) => {
                     categoryImage={categoryImage}
                     onPress={() => {
                       if (categoryId) {
-                        navigateTo("LifeInsurance", {
+                        navigation.navigate("LifeInsurance", {
                           category: cardTitle,
                           categoryId,
                           productId: section.productId || filteredSectionProducts[0]?.id,
@@ -525,7 +525,7 @@ const Home = ({navigation}) => {
                     onPress={() => {
                       if (categoryId) {
                         // Navigate to specific category
-                        navigateTo("LifeInsurance", {
+                        navigation.navigate("LifeInsurance", {
                           category: cardTitle,
                           categoryId,
                           productId: section.productId || sectionProducts[0]?.id,
@@ -557,7 +557,7 @@ const Home = ({navigation}) => {
   }, []); // Empty dependency array - only run once on mount
 
   const handleNotificationPress = () => {
-    navigateTo("Notifications");
+    navigation.navigate("Notifications");
   };
 
   return (
@@ -633,7 +633,7 @@ const Home = ({navigation}) => {
               <Text style={styles.promoMainText}>Get Extra Bonus on Every 3 Sales!</Text>
               <TouchableOpacity 
                 style={styles.startSellingBtn}
-                onPress={() => navigateTo('LEADS')}
+                onPress={() => navigation.navigate('LEADS')}
               >
                 <Text style={styles.startSellingText}>Start Selling</Text>
                 <MaterialIcons
@@ -755,13 +755,13 @@ const Home = ({navigation}) => {
                         const productSection = findProductSection(product, dynamicSections);
                         if (productSection) {
                           // Navigate to InsuranceProducts screen like View All does
-                          navigateTo("InsuranceProducts", {
+                          navigation.navigate("InsuranceProducts", {
                             productId: product.id,
                             categoryType: productSection,
                           });
                         } else {
                           // Fallback to direct product navigation
-                          navigateTo("LifeInsurance", {
+                          navigation.navigate("LifeInsurance", {
                             productId: product.id,
                             category: product.name,
                           });

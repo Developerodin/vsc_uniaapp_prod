@@ -16,11 +16,8 @@ import {
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
 
-import { navigateTo, goBack, replace } from "../../utils/navigation";
-import { useLocalSearchParams } from "expo-router";
-export default function InsuranceProducts() {
-    const params = useLocalSearchParams();
-    const { productId, categoryType } = params || {};
+export default function InsuranceProducts({ navigation, route }) {
+    const { productId, categoryType } = route?.params || {};
     
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState(null);
@@ -102,7 +99,7 @@ export default function InsuranceProducts() {
 
     const handleCategoryPress = (category, categoryId) => {
         // Navigate to specific category screen with the category ID
-        navigateTo('LifeInsurance', { 
+        navigation.navigate('LifeInsurance', { 
             category, 
             productId,
             categoryId, 
@@ -111,7 +108,7 @@ export default function InsuranceProducts() {
     };
 
     const handleBackPress = () => {
-        goBack();
+        navigation.goBack();
     };
 
     // Get icons based on product type
@@ -120,45 +117,45 @@ export default function InsuranceProducts() {
         switch(categoryType) {
             case "Insurance Services":
                 return [
-                    require("../../assets/icons/Life.png"),
-                    require("../../assets/icons/Health.png"),
-                    require("../../assets/icons/Motor.png"),
-                    require("../../assets/icons/Property.png"),
+                    require("../../../assets/icons/Life.png"),
+                    require("../../../assets/icons/Health.png"),
+                    require("../../../assets/icons/Motor.png"),
+                    require("../../../assets/icons/Property.png"),
                 ];
             case "Bank Loans":
                 return [
-                    require("../../assets/icons/Life.png"),
-                    require("../../assets/icons/Health.png"),
-                    require("../../assets/icons/Motor.png"),
-                    require("../../assets/icons/Property.png"),
+                    require("../../../assets/icons/Life.png"),
+                    require("../../../assets/icons/Health.png"),
+                    require("../../../assets/icons/Motor.png"),
+                    require("../../../assets/icons/Property.png"),
                 ];
             case "Project Funding":
                 return [
-                    require("../../assets/icons/Life.png"),
-                    require("../../assets/icons/Health.png"),
-                    require("../../assets/icons/Motor.png"),
-                    require("../../assets/icons/Property.png"),
+                    require("../../../assets/icons/Life.png"),
+                    require("../../../assets/icons/Health.png"),
+                    require("../../../assets/icons/Motor.png"),
+                    require("../../../assets/icons/Property.png"),
                 ];
             case "IT Sector Related Services":
                 return [
-                    require("../../assets/icons/Life.png"),
-                    require("../../assets/icons/Health.png"),
-                    require("../../assets/icons/Motor.png"),
-                    require("../../assets/icons/Property.png"),
+                    require("../../../assets/icons/Life.png"),
+                    require("../../../assets/icons/Health.png"),
+                    require("../../../assets/icons/Motor.png"),
+                    require("../../../assets/icons/Property.png"),
                 ];
             case "Capital Market Services":
                 return [
-                    require("../../assets/icons/Life.png"),
-                    require("../../assets/icons/Health.png"),
-                    require("../../assets/icons/Motor.png"),
-                    require("../../assets/icons/Property.png"),
+                    require("../../../assets/icons/Life.png"),
+                    require("../../../assets/icons/Health.png"),
+                    require("../../../assets/icons/Motor.png"),
+                    require("../../../assets/icons/Property.png"),
                 ];
             default:
                 return [
-                    require('../../assets/icons/Life.png'),
-                    require('../../assets/icons/Health.png'),
-                    require('../../assets/icons/Motor.png'),
-                    require('../../assets/icons/Property.png')
+                    require('../../../assets/icons/Life.png'),
+                    require('../../../assets/icons/Health.png'),
+                    require('../../../assets/icons/Motor.png'),
+                    require('../../../assets/icons/Property.png')
                 ];
         }
     };
