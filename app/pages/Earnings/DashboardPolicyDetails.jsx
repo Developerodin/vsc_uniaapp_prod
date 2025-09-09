@@ -10,7 +10,8 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View
+    View,
+    StatusBar
 } from 'react-native';
 import Pdf from "../../../assets/icons/Pdf.png";
 
@@ -182,11 +183,12 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         backgroundColor: '#ffffff',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
-        paddingTop: Platform.OS === 'ios' ? 0 : 15,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     header: {
         flexDirection: 'row',

@@ -14,7 +14,8 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    StatusBar
 } from 'react-native';
 
 import CustomAlertModal from '../../components/CustomAlertModal';
@@ -503,17 +504,19 @@ const styles = StyleSheet.create({
     viewWrapper: {
         flex: 1,
         backgroundColor: '#ffffff',
+        
     },
     safeArea: {
         flex: 1,
         backgroundColor: '#ffffff',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
         paddingHorizontal: 20,
-        paddingTop: Platform.OS === 'ios' ? 0 : 15,
-        marginTop:30,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        
     },
     loadingContainer: {
         flex: 1,

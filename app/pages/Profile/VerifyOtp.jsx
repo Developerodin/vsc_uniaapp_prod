@@ -8,7 +8,9 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    Platform,
+    StatusBar
 } from 'react-native';
 
 const { width } = Dimensions.get("window");
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffffff',
         paddingHorizontal: 20,
-        paddingTop: 15,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     header: {
         flexDirection: 'row',

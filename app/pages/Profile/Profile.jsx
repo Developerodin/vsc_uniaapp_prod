@@ -13,7 +13,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
 
@@ -278,10 +280,11 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#ffffff',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   container: {
     flex: 1,
-    
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   gradientHeader: {
     paddingBottom: 30,

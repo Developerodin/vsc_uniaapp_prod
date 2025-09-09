@@ -13,7 +13,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  StatusBar
 } from 'react-native';
 import CustomAlertModal from '../../components/CustomAlertModal';
 import { Base_url } from '../../config/BaseUrl';
@@ -400,6 +401,7 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   keyboardAvoidView: {
     flex: 1,

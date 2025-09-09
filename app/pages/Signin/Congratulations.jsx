@@ -11,7 +11,10 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  StatusBar,
+  Platform
+
 } from 'react-native';
 
 import CustomAlertModal from '../../components/CustomAlertModal';
@@ -244,6 +247,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: 'transparent',
+    
   },
   content: {
     flex: 1,

@@ -13,7 +13,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  StatusBar
 } from 'react-native';
 import CustomAlertModal from '../../components/CustomAlertModal';
 import { Base_url } from '../../config/BaseUrl';
@@ -361,6 +362,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   headerGradient: {
     paddingTop: 40,

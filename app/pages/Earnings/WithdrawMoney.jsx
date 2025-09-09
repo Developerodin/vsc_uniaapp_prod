@@ -9,7 +9,9 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    StatusBar,
+    Platform
 } from 'react-native';
 import CustomAlertModal from '../../components/CustomAlertModal';
 import SelectBankAccountModal from '../../components/Models/SelectBankAccountModal';
@@ -222,6 +224,7 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         backgroundColor: '#ffffff',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     header: {
         flexDirection: 'row',
