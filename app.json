@@ -14,7 +14,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.vscunia.app"
+      "bundleIdentifier": "com.vscunia.app",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to upload profile pictures and documents.",
+        "NSCameraUsageDescription": "This app needs access to your camera to take photos for profile pictures and documents.",
+        "NSPhotoLibraryAddUsageDescription": "This app needs access to save photos to your photo library."
+      }
     },
     "android": {
       "package": "com.vscunia.app",
@@ -22,11 +29,26 @@
         "foregroundImage": "./assets/app-assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/app-assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "cameraPermission": "The app accesses your camera to let you take photos for profile pictures and documents."
+        }
+      ],
+      "expo-font"
+    ],
     "extra": {
       "eas": {
         "projectId": "e984a678-3119-42b8-a438-f4a51fe69d70"
