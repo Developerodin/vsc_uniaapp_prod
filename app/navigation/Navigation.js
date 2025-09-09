@@ -5,9 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Fontisto, MaterialIcons } from '@expo/vector-icons';
 
 // Import pages
-import Home from '../pages/Home';
-import GroupClasses from '../pages/GroupClasses';
-import PersonalClasses from '../pages/PersonalClasses';
+import Home from '../pages/Home/Home';
 import StepTracker from '../pages/StepTracker';
 
 const Stack = createNativeStackNavigator();
@@ -87,14 +85,7 @@ const Navigation = () => {
         />
         
        
-        
-        <Stack.Screen 
-          name="StepTracker" 
-          component={StepTracker}
-          options={{
-            headerShown: false,
-          }}
-        />
+      
       </Stack.Navigator>
     </NavigationContainer>
   );
