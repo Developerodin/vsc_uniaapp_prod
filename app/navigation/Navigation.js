@@ -41,6 +41,14 @@ import CustomerProfile from '../pages/Leads/CustomerProfile';
 // Import Notifications pages
 import Notifications from '../pages/Notifications/Notifications';
 
+// Import Earnings pages
+import Earnings from '../pages/Earnings/Earnings';
+import WithdrawMoney from '../pages/Earnings/WithdrawMoney';
+import TransactionHistory from '../pages/Earnings/TransactionHistory';
+import PoliciesSold from '../pages/Earnings/PoliciesSold';
+import LeadConverted from '../pages/Earnings/LeadConverted';
+import DashboardPolicyDetails from '../pages/Earnings/DashboardPolicyDetails';
+
 // Import Home pages
 import Home from '../pages/Home/Home';
 import StepTracker from '../pages/StepTracker';
@@ -344,6 +352,55 @@ const Navigation = ({ isFirstTime, isAuthenticated, setIsFirstTime, setIsAuthent
         <Stack.Screen 
           name="Notifications" 
           component={Notifications}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        {/* Earnings Screens */}
+        <Stack.Screen 
+          name="Earnings" 
+          component={Earnings}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="WithdrawMoney" 
+          component={WithdrawMoney}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="TransactionHistory" 
+          component={TransactionHistory}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="PoliciesSold" 
+          component={PoliciesSold}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="LeadConverted" 
+          component={LeadConverted}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="DashboardPolicyDetails" 
+          component={DashboardPolicyDetails}
           options={{
             headerShown: false,
           }}

@@ -88,7 +88,7 @@ const SelectBankAccountModal = ({ isVisible, onClose, onSelectAccount }) => {
                     <>
                     <View style={styles.emptyContainer}>
                         <Image 
-                            source={require('../../assets/images/EmptyLead.png')}
+                            source={require('../../../assets/images/EmptyLead.png')}
                             style={styles.emptyImage}
                             resizeMode="contain"
                         />
