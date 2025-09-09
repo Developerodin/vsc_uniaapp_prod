@@ -140,7 +140,7 @@ export default function LeadConverted() {
                         {leadsData.length > 0 ? (
                             <View style={styles.cardsContainer}>
                                 {leadsData.map((lead) => (
-                                    <LeadCard key={lead.id} lead={lead} />
+                                    <LeadCard key={lead.id} lead={lead} navigation={navigation} />
                                 ))}
                             </View>
                         ) : (
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     headerTitleRevamp: {
-        fontSize: 32,
+        fontSize: 24,
         fontFamily: 'Poppins-SemiBold',
         color: '#fff',
         letterSpacing: 0.5,

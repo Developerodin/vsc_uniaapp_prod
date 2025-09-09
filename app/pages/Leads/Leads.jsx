@@ -497,7 +497,7 @@ export default function Leads() {
             {getFilteredLeads().length > 0 ? (
               <View style={styles.cardsContainer}>
                 {getFilteredLeads().map((lead) => (
-                  <LeadCard key={lead.id} lead={lead} />
+                  <LeadCard key={lead.id} lead={lead} navigation={navigation} />
                 ))}
               </View>
             ) : (
