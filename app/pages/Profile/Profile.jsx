@@ -18,13 +18,14 @@ import {
   Platform
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
-
+import { useAppContext } from '../../context/AppContext';
 
 import { useNavigation } from '@react-navigation/native';
 const {width,height} = Dimensions.get("window");
 
 
 export default function Profile() {
+  const { profileImageUpdate } = useAppContext();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
@@ -102,6 +103,13 @@ export default function Profile() {
   useEffect(() => {
     fetchUserData();
   }, []);
+
+  // Refetch user data when profile image is updated
+  useEffect(() => {
+    if (profileImageUpdate > 0) {
+      fetchUserData();
+    }
+  }, [profileImageUpdate]);
 
   return (
     <View style={styles.viewWrapper}>

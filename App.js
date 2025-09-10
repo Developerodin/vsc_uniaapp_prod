@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navigation from './app/navigation/Navigation';
+import { AppProvider } from './app/context/AppContext';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -57,13 +58,15 @@ export default function App() {
 
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
-      <Navigation 
-        isFirstTime={isFirstTime}
-        isAuthenticated={isAuthenticated}
-        setIsFirstTime={setIsFirstTime}
-        setIsAuthenticated={setIsAuthenticated}
-      />
-      <StatusBar style="auto" />
+      <AppProvider>
+        <Navigation 
+          isFirstTime={isFirstTime}
+          isAuthenticated={isAuthenticated}
+          setIsFirstTime={setIsFirstTime}
+          setIsAuthenticated={setIsAuthenticated}
+        />
+        <StatusBar style="auto" />
+      </AppProvider>
     </SafeAreaProvider>
   );
 }

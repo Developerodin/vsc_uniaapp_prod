@@ -21,10 +21,11 @@ import {
 import CustomAlertModal from '../../components/CustomAlertModal';
 import { Base_url } from '../../config/BaseUrl';
 import { pickImageFromLibrary } from '../../utils/imagePicker';
-
+import { useAppContext } from '../../context/AppContext';
 
 import { useNavigation } from '@react-navigation/native';
 export default function EditProfile() {
+    const { setProfileImageUpdate } = useAppContext();
     const [userId, setUserId] = useState(null);
     const [accessToken, setAccessToken] = useState(null);
     const [fullName, setFullName] = useState('');
@@ -261,6 +262,9 @@ export default function EditProfile() {
                     };
                     await AsyncStorage.setItem('user details', JSON.stringify(newUserDetails));
                 }
+                
+                // Trigger profile image update in context
+                setProfileImageUpdate(prev => prev + 1);
                 
                 showAlert(
                     'Success',

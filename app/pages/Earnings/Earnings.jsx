@@ -17,6 +17,7 @@ import {
   StatusBar
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
+import { useAppContext } from '../../context/AppContext';
 
 import { useNavigation } from '@react-navigation/native';
 const {height} = Dimensions.get("window");
@@ -42,6 +43,7 @@ const {height} = Dimensions.get("window");
 
 
 export default function Earnings() {
+  const { profileImageUpdate } = useAppContext();
   const navigation = useNavigation();
   const [selectedFilter, setSelectedFilter] = useState('Week');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -114,6 +116,13 @@ useEffect(() => {
     fetchWalletData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
+
+// Refetch user data when profile image is updated
+useEffect(() => {
+  if (profileImageUpdate > 0) {
+    fetchUserData();
+  }
+}, [profileImageUpdate]);
 
 const handleProfile = () => {
     navigation.navigate('Profile');

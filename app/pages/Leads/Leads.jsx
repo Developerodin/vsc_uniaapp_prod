@@ -21,7 +21,7 @@ import CustomAlertModal from '../../components/CustomAlertModal';
 import LeadCard from '../../components/LeadCard/LeadCard';
 import { Base_url } from '../../config/BaseUrl';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 // Dropdown component for filter modal
 const FilterDropdown = ({ label, value, options, onSelect, required = false, zIndex = 1000 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -199,6 +199,13 @@ export default function Leads() {
   useEffect(() => {
     fetchLeads();
   }, [fetchLeads]);
+
+  // Use useFocusEffect to refetch leads when screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchLeads();
+    }, [fetchLeads])
+  );
 
   // Fetch products for filter
   const fetchProducts = async () => {

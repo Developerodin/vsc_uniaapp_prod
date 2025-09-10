@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     SafeAreaView,
@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 export default function Notifications() {
     const navigation = useNavigation();
     const [notifications, setNotifications] = useState([]);
@@ -80,7 +80,7 @@ export default function Notifications() {
         }
     };
 
-    const fetchNotifications = async () => {
+    const fetchNotifications = useCallback(async () => {
         try {
             setLoading(true);
             const token = await AsyncStorage.getItem('access_token');
@@ -131,11 +131,18 @@ export default function Notifications() {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchNotifications();
-    }, []);
+    }, [fetchNotifications]);
+
+    // Use useFocusEffect to refetch notifications when screen comes into focus
+    useFocusEffect(
+        useCallback(() => {
+            fetchNotifications();
+        }, [fetchNotifications])
+    );
 
     // Render notification icon based on type
     const renderNotificationIcon = (type) => {

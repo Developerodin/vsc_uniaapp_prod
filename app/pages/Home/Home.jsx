@@ -24,10 +24,12 @@ import ProductsCardUI2 from "../../components/Cards/ProductsCardUI2.jsx"
 import FeaturedProductCard from "../../components/FeaturedProductCard/FeaturedProductCard.jsx"
 import Header from "../../components/Header/Header.jsx";
 import { Base_url } from "../../config/BaseUrl.jsx"
+import { useAppContext } from "../../context/AppContext.jsx"
 
 
 const { width ,height} = Dimensions.get("window");
 const Home = ({navigation}) => {
+  const { profileImageUpdate } = useAppContext();
   const [selected, setSelected] = useState(0);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
@@ -555,6 +557,13 @@ const Home = ({navigation}) => {
   useEffect(() => {
     fetchUserData();
   }, []); // Empty dependency array - only run once on mount
+
+  // Refetch user data when profile image is updated
+  useEffect(() => {
+    if (profileImageUpdate > 0) {
+      fetchUserData();
+    }
+  }, [profileImageUpdate]);
 
   const handleNotificationPress = () => {
     navigation.navigate("Notifications");
