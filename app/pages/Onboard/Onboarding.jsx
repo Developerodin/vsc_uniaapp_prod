@@ -76,8 +76,8 @@ export default function Onboarding() {
     try {
       // Mark that user has seen onboarding
       await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-      navigation.navigate('Welcome');
-      console.log('Navigation to Welcome successful');
+      navigation.navigate('DemoHome');
+      console.log('Navigation to DemoHome successful');
     } catch (error) {
       console.error('Navigation error:', error);
     }
@@ -88,7 +88,7 @@ export default function Onboarding() {
     try {
       // Mark that user has seen onboarding
       await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-      navigation.navigate('Welcome');
+      navigation.navigate('DemoHome');
       console.log('Skip navigation successful');
     } catch (error) {
       console.error('Skip navigation error:', error);

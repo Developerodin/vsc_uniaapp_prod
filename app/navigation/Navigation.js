@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Fontisto, MaterialIcons } from '@expo/vector-icons';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, BackHandler } from 'react-native';
 import CustomTabBar from '../components/CustomTabBar';
 
 // Import Onboard pages
 import Onboarding from '../pages/Onboard/Onboarding';
 import Welcome from '../pages/Onboard/Welcome';
+
+// Import Demo pages
+import DemoHome from '../pages/Demo/DemoHome';
 
 // Import Signin pages
 import Login from '../pages/Signin/Login';
@@ -68,6 +71,40 @@ const Tab = createBottomTabNavigator();
 
 // Tab Navigator Component
 const Tabs = ({ navigation }) => {
+  useEffect(() => {
+    let backPressCount = 0;
+    let backPressTimer = null;
+
+    const backAction = () => {
+      if (backPressCount === 0) {
+        backPressCount = 1;
+        backPressTimer = setTimeout(() => {
+          backPressCount = 0;
+        }, 2000); // Reset after 2 seconds
+        return true; // Prevent default back action
+      } else {
+        // Second back press within 2 seconds
+        if (backPressTimer) {
+          clearTimeout(backPressTimer);
+        }
+        BackHandler.exitApp();
+        return true;
+      }
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => {
+      backHandler.remove();
+      if (backPressTimer) {
+        clearTimeout(backPressTimer);
+      }
+    };
+  }, []);
+
   return (
     <Tab.Navigator
       tabBar={(props) => <CustomTabBar {...props} />}
@@ -127,7 +164,7 @@ const Navigation = ({ isFirstTime, isAuthenticated, setIsFirstTime, setIsAuthent
     } else if (isAuthenticated) {
       return 'Tabs';
     } else {
-      return 'Welcome';
+      return 'DemoHome';
     }
   };
 
@@ -154,6 +191,14 @@ const Navigation = ({ isFirstTime, isAuthenticated, setIsFirstTime, setIsAuthent
         <Stack.Screen 
           name="Welcome" 
           component={Welcome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        
+        <Stack.Screen 
+          name="DemoHome" 
+          component={DemoHome}
           options={{
             headerShown: false,
           }}
