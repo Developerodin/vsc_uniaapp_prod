@@ -128,8 +128,11 @@ export default function Login({ route }) {
           await AsyncStorage.setItem("Auth", "true");
           await AsyncStorage.setItem('user details', JSON.stringify(user));
           
-          // Navigate to Tabs screen
-          navigation.navigate('Tabs');
+          // Navigate to Tabs screen and reset navigation stack
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Tabs' }],
+          });
         }
       }
     } catch (error) {

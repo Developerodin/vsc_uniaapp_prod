@@ -51,11 +51,11 @@ export default function Welcome() {
   };
 
   const handleLogin = () => {
-    navigation.navigate('Login');
+    navigation.navigate('DemoHome');
   };
 
   const handleRegister = () => {
-    navigation.navigate('Login', { isRegister: true });
+    navigation.navigate('DemoHome');
   };
 
   // Auto slide functionality
