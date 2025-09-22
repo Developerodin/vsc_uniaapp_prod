@@ -19,6 +19,8 @@ import {
 } from 'react-native';
 import { Base_url } from '../../config/BaseUrl';
 import { useAppContext } from '../../context/AppContext';
+import CustomAlertModal from '../../components/CustomAlertModal';
+import Modal from 'react-native-modal';
 
 import { useNavigation } from '@react-navigation/native';
 const {width,height} = Dimensions.get("window");
@@ -30,6 +32,8 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigation = useNavigation();
 
   const handleBackPress = () => {
@@ -48,6 +52,49 @@ export default function Profile() {
     await AsyncStorage.clear();
     navigation.navigate('Welcome');
   }
+
+  const handleDeleteAccount = () => {
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteAccount = async () => {
+    if (!userId || !accessToken) {
+      console.error('User authentication required for account deletion');
+      return;
+    }
+
+    try {
+      setIsDeleting(true);
+      
+      // Call DELETE API to delete user account
+      const response = await axios.delete(`${Base_url}users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.status === 200 || response.status === 204) {
+        // Clear all local storage
+        await AsyncStorage.clear();
+        
+        // Navigate to welcome screen
+        navigation.navigate('Welcome');
+      }
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      // Even if API fails, clear local storage and logout
+      await AsyncStorage.clear();
+      navigation.navigate('Welcome');
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+    }
+  };
+
+  const cancelDeleteAccount = () => {
+    setShowDeleteModal(false);
+  };
 
   // Function to get user initials
   const getUserInitials = (name) => {
@@ -265,6 +312,15 @@ export default function Profile() {
 
             <View style={styles.divider} />
 
+            {/* Delete Account */}
+            <TouchableOpacity style={styles.menuItem} onPress={handleDeleteAccount}>
+              <View style={styles.menuIconContainer}>
+              <Ionicons name="trash-outline" size={19} color="#FF0000" style={styles.menuIcon} />
+              </View>
+              <Text style={styles.deleteText}>Delete Account</Text>
+              
+            </TouchableOpacity>
+
             {/* Log Out */}
             <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
               <View style={styles.menuIconContainer}>
@@ -276,6 +332,45 @@ export default function Profile() {
           </View>
         </ScrollView>
       </SafeAreaView>
+
+      {/* Delete Account Confirmation Modal */}
+      <Modal
+        isVisible={showDeleteModal}
+        onBackdropPress={cancelDeleteAccount}
+        backdropOpacity={0.5}
+        style={styles.deleteModal}
+      >
+        <View style={styles.deleteModalContainer}>
+          <View style={styles.deleteIconContainer}>
+            <Ionicons name="warning" size={40} color="#FF3B30" />
+          </View>
+          
+          <Text style={styles.deleteModalTitle}>Delete Account</Text>
+          
+          <Text style={styles.deleteModalMessage}>
+            Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.
+          </Text>
+          
+          <View style={styles.deleteButtonContainer}>
+            <TouchableOpacity
+              style={[styles.deleteModalButton, styles.cancelButton]}
+              onPress={cancelDeleteAccount}
+            >
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={[styles.deleteModalButton, styles.confirmDeleteButton]}
+              onPress={confirmDeleteAccount}
+              disabled={isDeleting}
+            >
+              <Text style={styles.confirmDeleteButtonText}>
+                {isDeleting ? "Deleting" : "Delete"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -433,6 +528,11 @@ const styles = StyleSheet.create({
     color: '#FF0000',
     fontFamily: 'Poppins-SemiBold',
   },
+  deleteText: {
+    fontSize: 18,
+    color: '#FF0000',
+    fontFamily: 'Poppins-SemiBold',
+  },
   divider: {
     height: 1,
     backgroundColor: '#F0F0F0',
@@ -455,5 +555,70 @@ const styles = StyleSheet.create({
   },
   chevronIcon: {
     marginLeft: 'auto',
+  },
+  // Delete Modal Styles
+  deleteModal: {
+    margin: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteModalContainer: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    width: width * 0.85,
+    alignItems: 'center',
+  },
+  deleteIconContainer: {
+    marginBottom: 15,
+  },
+  deleteModalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 10,
+    textAlign: 'center',
+    fontFamily: 'Poppins-Bold'
+  },
+  deleteModalMessage: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    textAlign: 'center',
+    fontFamily: 'Poppins-Regular',
+    lineHeight: 22,
+  },
+  deleteButtonContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  deleteModalButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    alignItems: 'center',
+  },
+  cancelButton: {
+    backgroundColor: '#f0f0f0',
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  confirmDeleteButton: {
+    backgroundColor: '#FF3B30',
+  },
+  cancelButtonText: {
+    color: '#666',
+    fontSize: 14,
+    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold'
+  },
+  confirmDeleteButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold'
   },
 });
