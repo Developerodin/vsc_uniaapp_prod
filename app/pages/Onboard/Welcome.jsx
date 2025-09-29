@@ -51,12 +51,10 @@ export default function Welcome() {
   };
 
   const handleLogin = () => {
-    navigation.navigate('DemoHome');
+    navigation.navigate('Login');
   };
 
-  const handleRegister = () => {
-    navigation.navigate('DemoHome');
-  };
+
 
   // Auto slide functionality
   useEffect(() => {
@@ -199,18 +197,13 @@ export default function Welcome() {
 
         <View style={styles.bottomContainer}>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.registerButton}
-              onPress={handleRegister}
-            >
-              <Text style={styles.registerButtonText}>Register</Text>
-            </TouchableOpacity>
+          
 
             <TouchableOpacity
               style={styles.loginButton}
               onPress={handleLogin}
             >
-              <Text style={styles.loginButtonText}>Login</Text>
+              <Text style={styles.loginButtonText}>Continue to Login</Text>
             </TouchableOpacity>
           </View>
 

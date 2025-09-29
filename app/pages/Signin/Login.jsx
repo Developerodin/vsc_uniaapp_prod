@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -14,7 +14,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  StatusBar
+  StatusBar,
+  BackHandler
 } from 'react-native';
 import CustomAlertModal from '../../components/CustomAlertModal';
 import { Base_url } from '../../config/BaseUrl';
@@ -38,6 +39,22 @@ export default function Login({ route }) {
   });
   const isRegister = route?.params?.isRegister || false;
   const navigation = useNavigation();
+
+  // Disable back navigation to prevent returning to demo
+  useEffect(() => {
+    const backAction = () => {
+      // Prevent going back to demo - exit app instead
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const showAlert = (title, message, icon = 'alert-circle', iconColor = '#FF3B30') => {
     setAlertConfig({
@@ -260,15 +277,15 @@ export default function Login({ route }) {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardAvoidView}
         >
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <TouchableOpacity
               style={styles.backButton}
-              onPress={() => navigation.navigate('Welcome')}
+              onPress={() => BackHandler.exitApp()}
             >
               <Ionicons name="chevron-back" size={24} color="white" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{isRegister ? 'Register' : 'Log In'}</Text>
-          </View>
+          </View> */}
           <ScrollView>
           <View style={styles.contentContainer}>
             <View style={styles.welcomeTextContainer}>
@@ -426,7 +443,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingHorizontal: 20 
+    paddingHorizontal: 20,
+    marginTop: 20, 
   },
   welcomeTextContainer: {
     marginTop: 20,

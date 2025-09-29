@@ -519,6 +519,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffffff',
         paddingHorizontal: 20,
+        marginTop:20
         
         
     },
