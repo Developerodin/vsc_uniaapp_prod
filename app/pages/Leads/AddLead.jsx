@@ -915,209 +915,206 @@ export default function AddLead() {
     };
 
     return (
-        <KeyboardAvoidingView 
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 0: 0}
-            enabled
-        >
-            <SafeAreaView style={styles.safeArea}>
-                {/* Revamped Header with Gradient and Progress Bar */}
-                <LinearGradient
-                    colors={['#fe8900', '#970251']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0.9 }}
-                    style={styles.gradientHeader}
-                >
-                    <RNImage
-                        source={require('../../../assets/images/CenterBg2.png')}
-                        style={styles.headerBgImage}
-                        resizeMode="cover"
-                    />
-                    <View style={styles.headerContent}>
-                        <TouchableOpacity 
-                            onPress={currentPhase === 1 ? handleBackPress : handlePreviousPhase} 
-                            style={{marginBottom: 3}}
-                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                        >
-                            <Ionicons name="chevron-back" size={24} color="#fff" />
-                        </TouchableOpacity>
-                        <Text style={styles.headerTitleWhite}>Add a Lead</Text>
-                    </View>
-                                         {/* Progress Bar / Stepper */}
-                     <View style={styles.progressBarWrapper}>
-                         {/* Step 1 */}
-                         <View style={styles.progressStepWrapper}>
-                             <View style={[styles.progressCircle, currentPhase >= 1 ? styles.progressCircleActive : null]} />
-                             <View style={[styles.progressLine, currentPhase > 1 ? styles.progressLineActive : null]} />
-                         </View>
-                         {/* Step 2 */}
-                         <View style={styles.progressStepWrapper}>
-                             <View style={[styles.progressCircle, currentPhase === 2 ? styles.progressCircleActive : null]} />
-                         </View>
-                     </View>
-                </LinearGradient>
-                {/* Main Content Area */}
-                <View style={styles.mainContainer}>
-                    <ScrollView 
-                        style={styles.scrollView}
-                        showsVerticalScrollIndicator={false}
-                        keyboardShouldPersistTaps="handled"
-                        nestedScrollEnabled={true}
-                        scrollEventThrottle={16}
-                        bounces={true}
-                        overScrollMode="always"
+        <SafeAreaView style={styles.safeArea}>
+            {/* Revamped Header with Gradient and Progress Bar */}
+            <LinearGradient
+                colors={['#fe8900', '#970251']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0.9 }}
+                style={styles.gradientHeader}
+            >
+                <RNImage
+                    source={require('../../../assets/images/CenterBg2.png')}
+                    style={styles.headerBgImage}
+                    resizeMode="cover"
+                />
+                <View style={styles.headerContent}>
+                    <TouchableOpacity 
+                        onPress={currentPhase === 1 ? handleBackPress : handlePreviousPhase} 
+                        style={{marginBottom: 3}}
+                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                     >
-                        <View style={styles.contentWrapper}>
-                            {/* Phase 1: Product & Category Selection */}
-                            {currentPhase === 1 && (
-                                <View style={[styles.section, { zIndex: 3000 }]}>
-                                    <Text style={styles.sectionTitle}>Product & Category Selection</Text>
-                                    
-                                    {isFromSubcategorySelection() ? (
-                                        // Show pre-selected values as read-only
-                                        <>
-                                            <View style={[styles.dropdownContainer, { zIndex: 3000 }]}>
-                                                <Text style={styles.inputLabel}>Product</Text>
-                                                <View style={[styles.dropdown, { backgroundColor: '#f6f6fa', borderColor: '#e6e6e6', opacity: 0.7 }]}>
-                                                    <Text style={styles.dropdownText}>{preSelectedProduct?.label || 'Product'}</Text>
-                                                    <Ionicons name="chevron-down" size={20} color="#ccc" />
-                                                </View>
+                        <Ionicons name="chevron-back" size={24} color="#fff" />
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitleWhite}>Add a Lead</Text>
+                </View>
+                {/* Progress Bar / Stepper */}
+                <View style={styles.progressBarWrapper}>
+                    {/* Step 1 */}
+                    <View style={styles.progressStepWrapper}>
+                        <View style={[styles.progressCircle, currentPhase >= 1 ? styles.progressCircleActive : null]} />
+                        <View style={[styles.progressLine, currentPhase > 1 ? styles.progressLineActive : null]} />
+                    </View>
+                    {/* Step 2 */}
+                    <View style={styles.progressStepWrapper}>
+                        <View style={[styles.progressCircle, currentPhase === 2 ? styles.progressCircleActive : null]} />
+                    </View>
+                </View>
+            </LinearGradient>
+            
+            {/* Main Content Area with KeyboardAvoidingView */}
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={styles.keyboardAvoidingView}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+                enabled
+            >
+                <ScrollView 
+                    style={styles.scrollView}
+                    contentContainerStyle={styles.scrollContentContainer}
+                    showsVerticalScrollIndicator={true}
+                    keyboardShouldPersistTaps="handled"
+                    scrollEventThrottle={16}
+                    bounces={true}
+                    overScrollMode="always"
+                    nestedScrollEnabled={false}
+                >
+                    <View style={styles.contentWrapper}>
+                        {/* Phase 1: Product & Category Selection */}
+                        {currentPhase === 1 && (
+                            <View style={[styles.section, { zIndex: 3000 }]}>
+                                <Text style={styles.sectionTitle}>Product & Category Selection</Text>
+                                
+                                {isFromSubcategorySelection() ? (
+                                    // Show pre-selected values as read-only
+                                    <>
+                                        <View style={[styles.dropdownContainer, { zIndex: 3000 }]}>
+                                            <Text style={styles.inputLabel}>Product</Text>
+                                            <View style={[styles.dropdown, { backgroundColor: '#f6f6fa', borderColor: '#e6e6e6', opacity: 0.7 }]}>
+                                                <Text style={styles.dropdownText}>{preSelectedProduct?.label || 'Product'}</Text>
+                                                <Ionicons name="chevron-down" size={20} color="#ccc" />
                                             </View>
-                                            
-                                            <View style={[styles.dropdownContainer, { zIndex: 2000 }]}>
-                                                <Text style={styles.inputLabel}>Category</Text>
-                                                <View style={[styles.dropdown, { backgroundColor: '#f6f6fa', borderColor: '#e6e6e6', opacity: 0.7 }]}>
-                                                    <Text style={styles.dropdownText}>{preSelectedCategory?.label || 'Category'}</Text>
-                                                    <Ionicons name="chevron-down" size={20} color="#ccc" />
-                                                </View>
+                                        </View>
+                                        
+                                        <View style={[styles.dropdownContainer, { zIndex: 2000 }]}>
+                                            <Text style={styles.inputLabel}>Category</Text>
+                                            <View style={[styles.dropdown, { backgroundColor: '#f6f6fa', borderColor: '#e6e6e6', opacity: 0.7 }]}>
+                                                <Text style={styles.dropdownText}>{preSelectedCategory?.label || 'Category'}</Text>
+                                                <Ionicons name="chevron-down" size={20} color="#ccc" />
                                             </View>
-                                            
-                                            <View style={[styles.dropdownContainer, { zIndex: 1000 }]}>
-                                                <Text style={styles.inputLabel}>Subcategory</Text>
-                                                <View style={[styles.dropdown, { backgroundColor: '#f6f6fa', borderColor: '#e6e6e6', opacity: 0.7 }]}>
-                                                    <Text style={styles.dropdownText}>{preSelectedSubcategory?.label || 'Subcategory'}</Text>
-                                                    <Ionicons name="chevron-down" size={20} color="#ccc" />
-                                                </View>
+                                        </View>
+                                        
+                                        <View style={[styles.dropdownContainer, { zIndex: 1000 }]}>
+                                            <Text style={styles.inputLabel}>Subcategory</Text>
+                                            <View style={[styles.dropdown, { backgroundColor: '#f6f6fa', borderColor: '#e6e6e6', opacity: 0.7 }]}>
+                                                <Text style={styles.dropdownText}>{preSelectedSubcategory?.label || 'Subcategory'}</Text>
+                                                <Ionicons name="chevron-down" size={20} color="#ccc" />
                                             </View>
-                                        </>
-                                    ) : (
-                                        // Normal dropdown selection
-                                        <>
-                                            {renderDropdown(
-                                                'Product',
-                                                selectedProduct?.value,
-                                                [{ value: '', label: 'Select a product' }, ...products],
-                                                handleProductSelect,
-                                                true,
-                                                3000
-                                            )}
-                                            
-                                            {renderDropdown(
-                                                'Category',
-                                                selectedCategory?.value,
-                                                [
-                                                    { 
-                                                        value: '', 
-                                                        label: !selectedProduct 
-                                                            ? 'Please select a product first'
-                                                            : filteredCategories.length === 0
-                                                            ? 'No categories available'
-                                                            : 'Select a category'
-                                                    },
-                                                    ...filteredCategories
-                                                ],
-                                                handleCategorySelect,
-                                                true,
-                                                2000
-                                            )}
+                                        </View>
+                                    </>
+                                ) : (
+                                    // Normal dropdown selection
+                                    <>
+                                        {renderDropdown(
+                                            'Product',
+                                            selectedProduct?.value,
+                                            [{ value: '', label: 'Select a product' }, ...products],
+                                            handleProductSelect,
+                                            true,
+                                            3000
+                                        )}
+                                        
+                                        {renderDropdown(
+                                            'Category',
+                                            selectedCategory?.value,
+                                            [
+                                                { 
+                                                    value: '', 
+                                                    label: !selectedProduct 
+                                                        ? 'Please select a product first'
+                                                        : filteredCategories.length === 0
+                                                        ? 'No categories available'
+                                                        : 'Select a category'
+                                                },
+                                                ...filteredCategories
+                                            ],
+                                            handleCategorySelect,
+                                            true,
+                                            2000
+                                        )}
 
-                                            {renderDropdown(
-                                                'Subcategory',
-                                                selectedSubcategory?.value,
-                                                [
-                                                    { 
-                                                        value: '', 
-                                                        label: !selectedCategory 
-                                                            ? 'Please select a category first'
-                                                            : subcategories.length === 0
-                                                            ? 'No subcategories available'
-                                                            : 'Select a subcategory'
-                                                    },
-                                                    ...subcategories
-                                                ],
-                                                handleSubcategorySelect,
-                                                true,
-                                                1000
-                                            )}
-                                        </>
-                                    )}
-                                </View>
-                            )}
+                                        {renderDropdown(
+                                            'Subcategory',
+                                            selectedSubcategory?.value,
+                                            [
+                                                { 
+                                                    value: '', 
+                                                    label: !selectedCategory 
+                                                        ? 'Please select a category first'
+                                                        : subcategories.length === 0
+                                                        ? 'No subcategories available'
+                                                        : 'Select a subcategory'
+                                                },
+                                                ...subcategories
+                                            ],
+                                            handleSubcategorySelect,
+                                            true,
+                                            1000
+                                        )}
+                                    </>
+                                )}
+                            </View>
+                        )}
 
-                            {/* Phase 2: Dynamic Fields */}
-                            {currentPhase === 2 && dynamicFields.length > 0 && !isLoadingFields && (
-                                <View style={styles.section}>
-                                    <Text style={styles.sectionTitle}>Lead Information</Text>
-                                    
-                                    {/* Show selected subcategory */}
-                                    <View style={styles.subcategoryDisplay}>
-                                        <Text style={styles.subcategoryLabel}>Selected Product:</Text>
-                                        <Text style={styles.subcategoryValue}>
-                                            {selectedSubcategory?.label || preSelectedSubcategory?.label || 'No subcategory selected'}
-                                        </Text>
-                                    </View>
-                                    
-                                    {dynamicFields.map(renderDynamicField)}
+                        {/* Phase 2: Dynamic Fields */}
+                        {currentPhase === 2 && dynamicFields.length > 0 && !isLoadingFields && (
+                            <View style={styles.section}>
+                                <Text style={styles.sectionTitle}>Lead Information</Text>
+                                
+                                {/* Show selected subcategory */}
+                                <View style={styles.subcategoryDisplay}>
+                                    <Text style={styles.subcategoryLabel}>Selected Product:</Text>
+                                    <Text style={styles.subcategoryValue}>
+                                        {selectedSubcategory?.label || preSelectedSubcategory?.label || 'No subcategory selected'}
+                                    </Text>
                                 </View>
-                            )}
-                            
-                            {/* Bottom Padding View */}
-                            <TouchableOpacity 
-                             style={[
-                                 styles.saveButton,
-                                 (
-                                     (currentPhase === 1 && !isPhase1Valid() && !isFromSubcategorySelection()) ||
-                                     (currentPhase === 2 && !isPhase3Valid()) ||
-                                     isSaving
-                                 ) && styles.disabledButton
-                             ]}
-                             disabled={
-                                 (currentPhase === 1 && !isPhase1Valid() && !isFromSubcategorySelection()) ||
-                                 (currentPhase === 2 && !isPhase3Valid()) ||
-                                 isSaving
-                             }
-                             activeOpacity={0.8}
-                             onPress={currentPhase === 2 ? saveLead : handleNextPhase}
-                         >
+                                
+                                {dynamicFields.map(renderDynamicField)}
+                            </View>
+                        )}
+                        
+                        {/* Save Button */}
+                        <TouchableOpacity 
+                            style={[
+                                styles.saveButton,
+                                (
+                                    (currentPhase === 1 && !isPhase1Valid() && !isFromSubcategorySelection()) ||
+                                    (currentPhase === 2 && !isPhase3Valid()) ||
+                                    isSaving
+                                ) && styles.disabledButton
+                            ]}
+                            disabled={
+                                (currentPhase === 1 && !isPhase1Valid() && !isFromSubcategorySelection()) ||
+                                (currentPhase === 2 && !isPhase3Valid()) ||
+                                isSaving
+                            }
+                            activeOpacity={0.8}
+                            onPress={currentPhase === 2 ? saveLead : handleNextPhase}
+                        >
                             {isSaving ? (
                                 <View style={styles.savingContainer}>
                                     <ActivityIndicator size="small" color="#FFFFFF" />
                                     <Text style={[styles.saveButtonText, { marginLeft: 10 }]}>Saving...</Text>
                                 </View>
-                                                         ) : (
-                                 <Text style={styles.saveButtonText}>
-                                     {currentPhase === 2 ? 'Save lead' : 'Next'}
-                                 </Text>
-                             )}
+                            ) : (
+                                <Text style={styles.saveButtonText}>
+                                    {currentPhase === 2 ? 'Save lead' : 'Next'}
+                                </Text>
+                            )}
                         </TouchableOpacity>
-                           
-                        </View>
-                    </ScrollView>
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
 
-                 
-                </View>
-
-                <CustomAlertModal
-                    isVisible={alertConfig.isVisible}
-                    onClose={hideAlert}
-                    title={alertConfig.title}
-                    message={alertConfig.message}
-                    icon={alertConfig.icon}
-                    iconColor={alertConfig.iconColor}
-                />
-            </SafeAreaView>
-        </KeyboardAvoidingView>
+            <CustomAlertModal
+                isVisible={alertConfig.isVisible}
+                onClose={hideAlert}
+                title={alertConfig.title}
+                message={alertConfig.message}
+                icon={alertConfig.icon}
+                iconColor={alertConfig.iconColor}
+            />
+        </SafeAreaView>
     );
 }
 
@@ -1196,13 +1193,15 @@ const styles = StyleSheet.create({
     progressLineActive: {
         backgroundColor: '#fff',
     },
-    mainContainer: {
+    keyboardAvoidingView: {
         flex: 1,
-        position: 'relative',
-        backgroundColor: '#ffffff',
     },
     scrollView: {
-        
+        flex: 1,
+    },
+    scrollContentContainer: {
+        flexGrow: 1,
+        paddingBottom: 20,
     },
     contentWrapper: {
         paddingHorizontal: 20,
