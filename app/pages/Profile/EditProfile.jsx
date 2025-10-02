@@ -489,6 +489,8 @@ export default function EditProfile() {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                <View style={{height: 300}} />
                     </ScrollView>
             </SafeAreaView>
 

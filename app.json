@@ -2,7 +2,7 @@
   "expo": {
     "name": "VSC UNIA",
     "slug": "vsc-unia",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/app-assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.vscunia.app",
-      "buildNumber": "1.0.0",
+      
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to upload profile pictures and documents.",

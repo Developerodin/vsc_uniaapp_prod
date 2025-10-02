@@ -918,7 +918,7 @@ export default function AddLead() {
         <KeyboardAvoidingView 
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 0: 0}
             enabled
         >
             <SafeAreaView style={styles.safeArea}>
@@ -1073,13 +1073,7 @@ export default function AddLead() {
                             )}
                             
                             {/* Bottom Padding View */}
-                            <View style={{ height: 100 }} />
-                        </View>
-                    </ScrollView>
-
-                    {/* Button Container - Fixed at bottom */}
-                    <View style={styles.buttonContainer}>
-                                                 <TouchableOpacity 
+                            <TouchableOpacity 
                              style={[
                                  styles.saveButton,
                                  (
@@ -1107,7 +1101,11 @@ export default function AddLead() {
                                  </Text>
                              )}
                         </TouchableOpacity>
-                    </View>
+                           
+                        </View>
+                    </ScrollView>
+
+                 
                 </View>
 
                 <CustomAlertModal
@@ -1130,14 +1128,14 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     gradientHeader: {
-        paddingBottom: 36,
-        paddingTop: Platform.OS === 'ios' ? 60 : 40,
+        paddingBottom: 6,
+        paddingTop: 20,
         paddingHorizontal: 0,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
         overflow: 'hidden',
         position: 'relative',
-        minHeight: 210,
+        minHeight: 110,
         justifyContent: 'flex-end',
     },
     headerBgImage: {
@@ -1204,7 +1202,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
     },
     scrollView: {
-        flex: 1,
+        
     },
     contentWrapper: {
         paddingHorizontal: 20,
@@ -1304,14 +1302,7 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        elevation: 3,
+        marginBottom: 30,
     },
     saveButtonText: {
         color: '#FFFFFF',
@@ -1411,21 +1402,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderTopWidth: 1,
         borderTopColor: '#e6e6e6',
-        paddingHorizontal: 20,
-        paddingTop: 15,
-        paddingBottom: Platform.OS === 'ios' ? 35 : 20,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: -2,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-        elevation: 5,
-        zIndex: 9999,
+      
     },
     fieldContainer: {
-        marginBottom: 20,
+        marginBottom: 0,
     },
     textInput: {
         color: '#000000',

@@ -291,9 +291,8 @@ export default function Login({ route }) {
             <View style={styles.welcomeTextContainer}>
               <Text style={styles.welcomeTitle}>{isRegister ? 'Join VSC ' : 'Welcome Back'}</Text>
               <Text style={styles.welcomeSubtitle}>
-                {isRegister 
-                  ? 'Sign up to sell insurance & banking products. track commissions, and grow your income.'
-                  : 'Login to manage leads, track earnings, and boost your sales.'}
+              Sign in to sell insurance & banking products. track commissions, and grow your income.
+               
               </Text>
             </View>
 
@@ -357,7 +356,7 @@ export default function Login({ route }) {
                           <View style={styles.uncheckedBox} />
                         )}
                       </View>
-                      <Text style={styles.rememberMeText}>Remember me</Text>
+                      <Text style={styles.rememberMeText}>Remember me </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={handleForgotPassword} disabled={forgotPasswordLoading}>
@@ -372,9 +371,17 @@ export default function Login({ route }) {
                   disabled={loading}
                 >
                   <Text style={styles.loginButtonText}>
-                    {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
+                    {loading ? 'Please wait...' : isRegister ? 'Register' : 'Sign in'}
                   </Text>
                 </TouchableOpacity>
+
+                <View style={styles.newUserMessageContainer}>
+                  <Text style={styles.newUserMessage}>
+                    {isRegister 
+                      ? 'Already have an account? You can login with the same form above.'
+                      : 'New to VSC? Just enter your email and password above to complete your profile and get started!'}
+                  </Text>
+                </View>
 
                 {/* <View style={styles.dividerContainer}>
                   <View style={styles.dividerLine} />
@@ -576,6 +583,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontFamily: 'Poppins-Bold'
+  },
+  newUserMessageContainer: {
+    backgroundColor: '#F8F9FA',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 20,
+    borderLeftWidth: 4,
+    borderLeftColor: '#fe8900',
+  },
+  newUserMessage: {
+    fontSize: 14,
+    color: '#666',
+    fontFamily: 'Poppins-Regular',
+    lineHeight: 20,
+    textAlign: 'center',
   },
   dividerContainer: {
     flexDirection: 'row',
