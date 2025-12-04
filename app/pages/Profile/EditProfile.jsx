@@ -489,6 +489,8 @@ export default function EditProfile() {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                <View style={{height: 300}} />
                     </ScrollView>
             </SafeAreaView>
 
@@ -519,6 +521,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffffff',
         paddingHorizontal: 20,
+        marginTop:20
         
         
     },

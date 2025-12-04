@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -14,7 +14,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  StatusBar
+  StatusBar,
+  BackHandler
 } from 'react-native';
 import CustomAlertModal from '../../components/CustomAlertModal';
 import { Base_url } from '../../config/BaseUrl';
@@ -38,6 +39,22 @@ export default function Login({ route }) {
   });
   const isRegister = route?.params?.isRegister || false;
   const navigation = useNavigation();
+
+  // Disable back navigation to prevent returning to demo
+  useEffect(() => {
+    const backAction = () => {
+      // Prevent going back to demo - exit app instead
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const showAlert = (title, message, icon = 'alert-circle', iconColor = '#FF3B30') => {
     setAlertConfig({
@@ -260,23 +277,22 @@ export default function Login({ route }) {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardAvoidView}
         >
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <TouchableOpacity
               style={styles.backButton}
-              onPress={() => navigation.navigate('Welcome')}
+              onPress={() => BackHandler.exitApp()}
             >
               <Ionicons name="chevron-back" size={24} color="white" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>{isRegister ? 'Register' : 'Log In'}</Text>
-          </View>
+          </View> */}
           <ScrollView>
           <View style={styles.contentContainer}>
             <View style={styles.welcomeTextContainer}>
               <Text style={styles.welcomeTitle}>{isRegister ? 'Join VSC ' : 'Welcome Back'}</Text>
               <Text style={styles.welcomeSubtitle}>
-                {isRegister 
-                  ? 'Sign up to sell insurance & banking products. track commissions, and grow your income.'
-                  : 'Login to manage leads, track earnings, and boost your sales.'}
+              Sign in to sell insurance & banking products. track commissions, and grow your income.
+               
               </Text>
             </View>
 
@@ -340,7 +356,7 @@ export default function Login({ route }) {
                           <View style={styles.uncheckedBox} />
                         )}
                       </View>
-                      <Text style={styles.rememberMeText}>Remember me</Text>
+                      <Text style={styles.rememberMeText}>Remember me </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={handleForgotPassword} disabled={forgotPasswordLoading}>
@@ -355,9 +371,17 @@ export default function Login({ route }) {
                   disabled={loading}
                 >
                   <Text style={styles.loginButtonText}>
-                    {loading ? 'Please wait...' : isRegister ? 'Register' : 'Login'}
+                    {loading ? 'Please wait...' : isRegister ? 'Register' : 'Sign in'}
                   </Text>
                 </TouchableOpacity>
+
+                <View style={styles.newUserMessageContainer}>
+                  <Text style={styles.newUserMessage}>
+                    {isRegister 
+                      ? 'Already have an account? You can login with the same form above.'
+                      : 'New to VSC? Just enter your email and password above to complete your profile and get started!'}
+                  </Text>
+                </View>
 
                 {/* <View style={styles.dividerContainer}>
                   <View style={styles.dividerLine} />
@@ -426,7 +450,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingHorizontal: 20 
+    paddingHorizontal: 20,
+    marginTop: 20, 
   },
   welcomeTextContainer: {
     marginTop: 20,
@@ -558,6 +583,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontFamily: 'Poppins-Bold'
+  },
+  newUserMessageContainer: {
+    backgroundColor: '#F8F9FA',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 20,
+    borderLeftWidth: 4,
+    borderLeftColor: '#fe8900',
+  },
+  newUserMessage: {
+    fontSize: 14,
+    color: '#666',
+    fontFamily: 'Poppins-Regular',
+    lineHeight: 20,
+    textAlign: 'center',
   },
   dividerContainer: {
     flexDirection: 'row',
