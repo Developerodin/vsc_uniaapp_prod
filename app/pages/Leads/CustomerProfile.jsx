@@ -128,10 +128,48 @@ export default function CustomerProfile() {
             'qualified': 'Interested',
             'proposal': 'Follow-up',
             'negotiation': 'Follow-up',
-            'closed': 'Converted',
+            'closed': 'Success',
             'lost': 'Closed'
         };
         return statusMap[status] || 'Interested';
+    };
+
+    // Map phase name to display name
+    const mapPhaseName = (phaseName) => {
+        if (!phaseName) return '';
+        const lowerName = phaseName.toLowerCase().trim();
+        const phaseMap = {
+            'closed': 'Success',
+            'lost': 'Closed'
+        };
+        // Check if the phase name matches any status that needs mapping
+        if (phaseMap[lowerName]) {
+            return phaseMap[lowerName];
+        }
+        // Also check if it contains these words (replace in the name)
+        let mappedName = phaseName;
+        if (lowerName.includes('closed')) {
+            mappedName = mappedName.replace(/\bclosed\b/gi, 'Success');
+        }
+        if (lowerName.includes('lost')) {
+            mappedName = mappedName.replace(/\blost\b/gi, 'Closed');
+        }
+        // If we made replacements, return the mapped name, otherwise capitalize first letter
+        if (mappedName !== phaseName) {
+            return mappedName;
+        }
+        return phaseName.charAt(0).toUpperCase() + phaseName.slice(1);
+    };
+
+    // Map phase description to replace status words
+    const mapPhaseDescription = (description) => {
+        if (!description) return '';
+        let mappedDesc = description;
+        // Replace "closed" with "Success" (case insensitive, whole word)
+        mappedDesc = mappedDesc.replace(/\bclosed\b/gi, 'Success');
+        // Replace "lost" with "Closed" (case insensitive, whole word)
+        mappedDesc = mappedDesc.replace(/\blost\b/gi, 'Closed');
+        return mappedDesc;
     };
 
     // Get status color
@@ -142,7 +180,7 @@ export default function CustomerProfile() {
                 return '#0085FF';
             case 'Follow-up':
                 return '#FFAE00';
-            case 'Converted':
+            case 'Success':
                 return '#00BC64';
             case 'Closed':
                 return '#FF0000';
@@ -331,6 +369,8 @@ export default function CustomerProfile() {
                                     {timelineData?.phases?.length > 0 ? timelineData.phases.map((phase, idx) => {
                                         const isCompleted = phase.completed;
                                         const isActive = phase.active;
+                                        // Map phase name and status if they exist
+                                        const displayPhaseName = mapPhaseName(phase.name || phase.status || '');
                                         return (
                                             <View key={idx} style={styles.timelinePhaseRow}>
                                                 {/* Timeline Dot and Line */}
@@ -351,7 +391,7 @@ export default function CustomerProfile() {
                                                 {/* Phase Content */}
                                                 <View style={styles.timelinePhaseContent}>
                                                     <View style={styles.timelinePhaseHeader}>
-                                                        <Text style={styles.timelinePhaseTitle}>{phase.name.charAt(0).toUpperCase() + phase.name.slice(1)}</Text>
+                                                        <Text style={styles.timelinePhaseTitle}>{displayPhaseName}</Text>
                                                         <View style={[
                                                             styles.timelineStatusBadge,
                                                             isCompleted ? { backgroundColor: '#E6F9F0' } : isActive ? { backgroundColor: '#E6F0FA' } : { backgroundColor: '#F8F8F8' }
@@ -364,7 +404,7 @@ export default function CustomerProfile() {
                                                             </Text>
                                                         </View>
                                                     </View>
-                                                    <Text style={styles.timelinePhaseDesc}>{phase.description}</Text>
+                                                    <Text style={styles.timelinePhaseDesc}>{mapPhaseDescription(phase.description)}</Text>
                                                     <Text style={styles.timelinePhaseDate}>
                                                         {phase.estimatedActiveDate
                                                             ? new Date(phase.estimatedActiveDate).toLocaleString('en-IN', {

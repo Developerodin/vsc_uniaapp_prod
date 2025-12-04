@@ -232,6 +232,9 @@ export default function AddLead() {
     // Add new state for image fields
     const [imageFields, setImageFields] = useState({});
 
+    // Add state for field validation errors
+    const [fieldErrors, setFieldErrors] = useState({});
+
     // Add this at the top with other state declarations
     const [showGenderDropdown, setShowGenderDropdown] = useState({});
 
@@ -269,6 +272,10 @@ export default function AddLead() {
             
             // Only validate mandatory fields
             if (field.fieldOption !== 'mandatory') {
+                // For optional email fields, validate format if value is provided
+                if (isEmailField(field) && value && value.trim() !== '') {
+                    return validateEmail(value);
+                }
                 return true; // Skip validation for optional fields
             }
             
@@ -277,6 +284,13 @@ export default function AddLead() {
             }
             if (field.type === 'file') {
                 return value && value.url && value.key; // Check for both url and key
+            }
+            if (isEmailField(field)) {
+                // For mandatory email fields, check both presence and format
+                if (!value || typeof value !== 'string' || value.trim().length === 0) {
+                    return false;
+                }
+                return validateEmail(value);
             }
             return value && typeof value === 'string' && value.trim().length > 0;
         });
@@ -335,6 +349,7 @@ export default function AddLead() {
                 setDynamicFields([]); // Clear dynamic fields when product changes
                 setFieldValues({}); // Clear field values
                 setFieldsData(null); // Clear fields data
+                setFieldErrors({}); // Clear field errors
             }
         } else {
             setFilteredCategories([]);
@@ -352,6 +367,7 @@ export default function AddLead() {
                 setDynamicFields([]); // Clear dynamic fields when category changes
                 setFieldValues({}); // Clear field values
                 setFieldsData(null); // Clear fields data
+                setFieldErrors({}); // Clear field errors
             }
         } else {
             setSubcategories([]);
@@ -474,12 +490,14 @@ export default function AddLead() {
                 initialValues[field.name] = '';
             });
             setFieldValues(initialValues);
+            setFieldErrors({}); // Clear any previous errors
             
         } catch (error) {
             console.error('Error fetching dynamic fields:', error);
             setDynamicFields([]);
             setFieldValues({});
             setFieldsData(null);
+            setFieldErrors({});
         } finally {
             setIsLoadingFields(false);
         }
@@ -510,11 +528,48 @@ export default function AddLead() {
         setShowSubcategoryDropdown(false);
     };
 
+    // Helper function to check if a field is an email field
+    const isEmailField = (field) => {
+        if (!field) return false;
+        // Check if type is email
+        if (field.type === 'email') return true;
+        // Check if field name contains "email" (case-insensitive)
+        const fieldName = (field.name || '').toLowerCase();
+        return fieldName.includes('email');
+    };
+
+    // Email validation function
+    const validateEmail = (email) => {
+        if (!email || email.trim() === '') {
+            return true; // Empty is valid (handled by mandatory check)
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email.trim());
+    };
+
     const handleFieldValueChange = (fieldName, value) => {
         setFieldValues(prevValues => ({
             ...prevValues,
             [fieldName]: value
         }));
+
+        // Validate email fields in real-time
+        const field = dynamicFields.find(f => f.name === fieldName);
+        if (field && isEmailField(field)) {
+            if (value && value.trim() !== '') {
+                const isValid = validateEmail(value);
+                setFieldErrors(prevErrors => ({
+                    ...prevErrors,
+                    [fieldName]: isValid ? null : 'Please enter a valid email address'
+                }));
+            } else {
+                // Clear error if field is empty
+                setFieldErrors(prevErrors => ({
+                    ...prevErrors,
+                    [fieldName]: null
+                }));
+            }
+        }
     };
 
     const handleLeadDataChange = (field, value) => {
@@ -714,10 +769,13 @@ export default function AddLead() {
             );
         }
 
-        const getKeyboardType = (type) => {
-            switch (type) {
-                case 'email':
-                    return 'email-address';
+        const getKeyboardType = (fieldType, fieldName) => {
+            // Check if field name contains "email" (case-insensitive)
+            const nameLower = (fieldName || '').toLowerCase();
+            if (fieldType === 'email' || nameLower.includes('email')) {
+                return 'email-address';
+            }
+            switch (fieldType) {
                 case 'number':
                     return 'numeric';
                 case 'phone':
@@ -726,6 +784,9 @@ export default function AddLead() {
                     return 'default';
             }
         };
+
+        const hasError = fieldErrors[name];
+        const isEmailFieldType = isEmailField(field);
 
         return (
             <View key={name} style={styles.fieldContainer}>
@@ -736,15 +797,20 @@ export default function AddLead() {
                 <TextInput
                     style={[
                         styles.input,
-                        styles.textInput
+                        styles.textInput,
+                        hasError && styles.inputError
                     ]}
                     value={value}
                     onChangeText={(text) => handleFieldValueChange(name, text)}
                     placeholder={`Enter ${name.toLowerCase()}`}
                     placeholderTextColor="#666666"
-                    keyboardType={getKeyboardType(type)}
-                    autoCapitalize={type === 'email' ? 'none' : 'words'}
+                    keyboardType={getKeyboardType(type, name)}
+                    autoCapitalize={isEmailFieldType ? 'none' : 'words'}
+                    autoCorrect={isEmailFieldType ? false : true}
                 />
+                {hasError && (
+                    <Text style={styles.errorText}>{hasError}</Text>
+                )}
             </View>
         );
     };
@@ -828,8 +894,33 @@ export default function AddLead() {
 
     // Save lead function
     const saveLead = async () => {
-        if (!isPhase3Valid()) {
-            showAlert('Error', 'Please fill all required fields');
+        // Validate all email fields before saving (including optional ones with values)
+        const newErrors = {};
+        dynamicFields.forEach(field => {
+            if (isEmailField(field)) {
+                const value = fieldValues[field.name];
+                if (value && value.trim() !== '') {
+                    if (!validateEmail(value)) {
+                        newErrors[field.name] = 'Please enter a valid email address';
+                    }
+                }
+            }
+        });
+        
+        // Update field errors
+        if (Object.keys(newErrors).length > 0) {
+            setFieldErrors(prevErrors => ({ ...prevErrors, ...newErrors }));
+        }
+        
+        if (!isPhase3Valid() || Object.keys(newErrors).length > 0) {
+            // Check if there are email validation errors
+            const allErrors = { ...fieldErrors, ...newErrors };
+            const emailErrors = Object.values(allErrors).filter(error => error !== null);
+            if (emailErrors.length > 0) {
+                showAlert('Error', 'Please enter valid email addresses in all email fields');
+            } else {
+                showAlert('Error', 'Please fill all required fields');
+            }
             return;
         }
 
@@ -1510,5 +1601,17 @@ const styles = StyleSheet.create({
          fontSize: 16,
          color: '#000000',
          fontFamily: 'Poppins-SemiBold',
+     },
+     inputError: {
+         borderColor: '#FF3B30',
+         borderWidth: 1.5,
+     },
+     errorText: {
+         fontSize: 14,
+         color: '#FF3B30',
+         fontFamily: 'Poppins-Regular',
+         marginTop: -15,
+         marginBottom: 15,
+         marginLeft: 5,
      },
 });
